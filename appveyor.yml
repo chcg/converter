@@ -28,7 +28,7 @@ build:
     verbosity: minimal
 
 build_script:
-    - cd c:\projects\converter\vs.proj\
+    - cd c:\projects\converter\vc.proj\
     - msbuild NppPluginConverter.vcxproj /p:configuration="%configuration%" /p:platform="%platform%" /p:PlatformToolset="%PlatformToolset%"
 
 after_build:
@@ -41,7 +41,7 @@ after_build:
         }
 
         if ($env:PLATFORM -eq "x64" -and $env:CONFIGURATION -eq "Debug") {
-            Push-AppveyorArtifact "vs.proj\x64\Debug\NppPluginConverter.dll" -FileName "$NppPluginConverterFileName"
+            Push-AppveyorArtifact "vc.proj\x64\Debug\NppPluginConverter.dll" -FileName "$NppPluginConverterFileName"
         }
 
         if ($env:PLATFORM -eq "Win32" -and $env:CONFIGURATION -eq "Release") {
@@ -49,6 +49,6 @@ after_build:
         }
 
         if ($env:PLATFORM -eq "Win32" -and $env:CONFIGURATION -eq "Debug") {
-            Push-AppveyorArtifact "vs.proj\Debug\NppPluginConverter.dll" -FileName "$NppPluginConverterFileName"
+            Push-AppveyorArtifact "vc.proj\Debug\NppPluginConverter.dll" -FileName "$NppPluginConverterFileName"
         }
 
