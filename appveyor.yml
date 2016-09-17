@@ -2,9 +2,6 @@ version: 4.2.{build}
 image: Visual Studio 2015
 
 
-clone_depth: 1
-
-
 environment:
   matrix:
   - PlatformToolset: v140_xp
@@ -28,27 +25,27 @@ build:
     verbosity: minimal
 
 build_script:
-    - cd c:\projects\converter\vc.proj\
+    - cd "%APPVEYOR_BUILD_FOLDER%"\vc.proj\
     - msbuild NppPluginConverter.vcxproj /p:configuration="%configuration%" /p:platform="%platform%" /p:PlatformToolset="%PlatformToolset%"
 
 after_build:
-    - cd c:\projects\converter\
+    - cd "%APPVEYOR_BUILD_FOLDER%"
     - ps: >-
-        $NppPluginConverterFileName = "NppPluginConverter.$env:PLATFORM.$env:CONFIGURATION.$env:PLATFORMTOOLSET.dll"
+        $NppPluginConverterFileName = "NppConverter.$env:PLATFORM.$env:CONFIGURATION.$env:PLATFORMTOOLSET.dll"
 
         if ($env:PLATFORM -eq "x64" -and $env:CONFIGURATION -eq "Release") {
-            Push-AppveyorArtifact "bin64\NppPluginConverter.dll" -FileName "$NppPluginConverterFileName"
+            Push-AppveyorArtifact "bin64\NppConverter.dll" -FileName "$NppPluginConverterFileName"
         }
 
         if ($env:PLATFORM -eq "x64" -and $env:CONFIGURATION -eq "Debug") {
-            Push-AppveyorArtifact "vc.proj\x64\Debug\NppPluginConverter.dll" -FileName "$NppPluginConverterFileName"
+            #Push-AppveyorArtifact "vc.proj\x64\Debug\NppConverter.dll" -FileName "$NppPluginConverterFileName"
         }
 
         if ($env:PLATFORM -eq "Win32" -and $env:CONFIGURATION -eq "Release") {
-            Push-AppveyorArtifact "bin\NppPluginConverter.dll" -FileName "$NppPluginConverterFileName"
+            Push-AppveyorArtifact "bin\NppConverter.dll" -FileName "$NppPluginConverterFileName"
         }
 
         if ($env:PLATFORM -eq "Win32" -and $env:CONFIGURATION -eq "Debug") {
-            Push-AppveyorArtifact "vc.proj\Debug\NppPluginConverter.dll" -FileName "$NppPluginConverterFileName"
+            #Push-AppveyorArtifact "vc.proj\Debug\NppConverter.dll" -FileName "$NppPluginConverterFileName"
         }
 
